@@ -1,0 +1,343 @@
+% ================================================================================
+\documentclass[12pt]{../document-templates/papers/one-column-mydashie/mydashie}
+% ================================================================================
+\usepackage[left=1in,right=1in, top=1.2in,bottom=1.2in]{geometry}
+\usepackage{../document-templates/papers/one-column-mydashie/mydashie}
+\usepackage{times}
+\usepackage{amssymb,amsthm,latexsym,amsmath,epsfig,pgf}
+
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage{url}
+\usepackage{hyperref}
+
+\usepackage{blkarray}
+\usepackage{tikzsymbols}
+% ================================================================================
+\firstpage{1}
+% ================================================================================
+\runauth{
+Notes: Grundy values and distinct distances
+\hspace{2ex} $\arrowvert$\hspace{2ex}
+Carolin Z\"obelein}
+% ================================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem*{theorem A}{Theorem A}
+\newtheorem*{theorem B}{N\"olker's Theorem}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{question}{Question}
+\newtheorem {conjecture}{Conjecture}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\theoremstyle{remark}
+\newtheorem{remarks}{Remarks}
+% ================================================================================
+\begin{document}
+% ================================================================================
+\begin{frontmatter}
+% ================================================================================
+\title{Notes: Grundy values and distinct distances}
+% ================================================================================
+\author[label1]{Carolin Z\"obelein\footnote{\url{https://research.carolin-zoebelein.de}}\footnote{The author believes in the importance of the independence of research and is funded by the public community. If you also believe in this values, you can find ways for supporting the author's work here: \url{https://research.carolin-zoebelein.de/funding.html}}, id: \textrm{notes\_0007}}
+
+%\address[label1]{\small Institute}
+\address[label1]{\small Independent mathematical scientist,\\
+	Josephsplatz 8, 90403 N\"urnberg,\\
+	Germany
+
+\vspace*{2.5ex} 
+ {\normalfont contact@carolin-zoebelein.de\\
+	PGP: D4A7 35E8 D47F 801F 2CF6 2BA7 927A FD3C DE47 E13B}
+ }
+% ================================================================================
+\begin{abstract}
+TODO
+\end{abstract}
+% ================================================================================
+\begin{keyword}
+% Separate keyword by \sep
+Combinatoric \sep Integers \sep Sequences \sep Grundy values \sep Nim-values 
+
+% Write the classification number
+2010 Mathematics Classification: Primary 05A17.
+\end{keyword}
+% ================================================================================
+\end{frontmatter}
+% ================================================================================
+%\tableofcontents    % TODO
+% ================================================================================
+% --------------------------------------------------------------------------------
+\section*{Preamble}
+\label{s:preamble}
+% --------------------------------------------------------------------------------
+This notes are inspired by questions on Mathoverflow\footnote{\url{https://mathoverflow.net}}, a Q\&A site for professional mathematicians.
+% ================================================================================
+% --------------------------------------------------------------------------------
+\section{Introduction}
+\label{s:introduction}
+% --------------------------------------------------------------------------------
+March 26th, 2020, Mikhail Tikhomirov posted the following question with title \textit{Distinct distances between adjacent equal elements} in the categories \textit{co.combinatorics} and \textit{integer-sequences} on Mathoverflow:\\
+
+\textit{Let's call a sequence $a_{1}, \dots, a_{n}$ \textbf{suitable} if for any positive integer $d$ there is at most one index $i$ such that $a_{i} = a_{i+d}$ and all elements $a_{i+1}, \dots, a_{i+d-1}$ are not equal to $a_{i}$.}\\
+
+\textit{For each $k$, I'm interested in longest suitable sequences with all elements in $\{0, \dots,k-1\}$. There is a suitable sequence of length $3k-1$: start with numbers $0 \dots, k - 1$ in order, followed by first $2k-1$ elements of A025480\footnote{\url{http://oeis.org/A025480}}. E.g., for $k=3$ this sequence would look as follows: $0,1,2,0,0,1,0,2$. It isn't difficult to prove that this pattern works for any $k$.}\\
+
+\textit{With brute-force I've discovered a few curious observations:}
+\begin{enumerate}
+    \item \textit{$3k-1$ appears to be the maximum length of a suitable sequence with elements in $\{0, \dots,k-1\}$;}
+    \item \textit{The number of longest suitable sequences appears to be $k! \times A002047\footnote{\url{http://oeis.org/A002047}} [k]$.}
+\end{enumerate}
+
+\textit{How can this be explained?}\\
+
+Now, we will have a look at this problem.
+% ================================================================================
+% --------------------------------------------------------------------------------
+\section{Grundy values}
+\label{s:grundyvalues}
+% --------------------------------------------------------------------------------
+At first, we want to spend some time with the Grundy values, at first.
+% ================================================================================
+% --------------------------------------------------------------------------------
+\subsection{Definition}
+\label{ss:definition}
+% --------------------------------------------------------------------------------
+A025480 \cite{GrundyValues}, describes the integer sequence of so-called \textit{Grundy values}, which are defined by
+\begin{equation}
+    a\left(2n\right) = n \quad \mathrm{and} \quad a\left(2n+1\right) = a\left(n\right).
+\label{eq:grundyvalues}
+\end{equation}
+
+To get a feeling for this numbers, let's look at the first ones.
+\begin{enumerate}
+    \setcounter{enumi}{-1}
+    \item
+        $a\left(2\cdot 0\right) = a\left(0\right) = 0$\\
+        $a\left(2\cdot 0 + 1\right) = a\left(1\right) = a\left(0\right) = 0$
+    \item
+        $a\left(2\cdot 1\right) = a\left(2\right) = 1$\\
+        $a\left(2\cdot 1 + 1\right) = a\left(3\right) = a\left(1\right) = a\left(0\right) = 0$
+    \item
+        $a\left(2\cdot 2\right) = a\left(4\right) = 2$\\
+        $a\left(2\cdot 2 + 1\right) = a\left(5\right) = a\left(2\right) = 1$
+    \item
+        $a\left(2\cdot 3\right) = a\left(6\right) = 3$\\
+        $a\left(2\cdot 3 + 1\right) = a\left(7\right) = a\left(3\right) = a\left(1\right) = a\left(0\right) = 0$
+    \item
+        $a\left(2\cdot 4\right) = a\left(8\right) = 4$\\
+        $a\left(2\cdot 4 + 1\right) = a\left(9\right) = a\left(4\right) = 2$
+    \item
+        $a\left(2\cdot 5\right) = a\left(10\right) = 5$\\
+        $a\left(2\cdot 5 + 1\right) = a\left(11\right) = a\left(5\right) = a\left(2\right) = 1$      
+\end{enumerate}
+% ================================================================================
+% --------------------------------------------------------------------------------
+\subsection{Element determination}
+\label{ss:elementdetermination}
+% --------------------------------------------------------------------------------
+In this section, we want to show an easy method to determine the sequence elements.\\
+
+At first, we will define $m^{e} := 2n$ (m is even) respectively $m^{o} := 2n + 1$ (m is odd) and hence, we can rewrite equation (\ref{eq:grundyvalues}) to
+\begin{equation}
+    a\left(m^{e}\right) = \frac{m^{e}}{2} \quad \mathrm{and} \quad a\left(m^{o}\right) = a\left(\frac{m^{o}-1}{2}\right).
+\label{eq:grundyvalues_m}
+\end{equation}
+
+If we look at our examples and the definition of Grundy values, we see that starting by any $m^{o}$ the calculation of the final element stops if we reach a $m^{e}$ after an certain number of odd $m^{o}$'s. So, the $m^{e}$ are our termination cases of element computation.\\
+
+We will determine an equation which connects the starting element $m_{1}^{o}$ with the final termination element $m_{i+1}^{e}$. For this let's look at the following:
+\begin{enumerate}
+    \item $m_{1}^{o}$ be our given odd starting element.
+    \item Determine first step: $m^{o}_{2} = \frac{m_{1}^{o} - 1}{2}$\\
+        We assume that our result $m^{o}_{2}$ is also an odd number.
+    \item Determine second step: $m^{o}_{3} = \frac{m_{2}^{o} - 1}{2} = \frac{\frac{m_{1}^{o} - 1}{2} - 1}{2} = \frac{m_{1}^{o} - 1 - 2}{2^{2}}$\\
+        We assume that our result $m^{o}_{3}$ is also an odd number.
+    \item Determine third step: $m^{o}_{4} = \frac{m_{3}^{o} - 1}{2} = \frac{\frac{m_{1}^{o} - 1 - 2}{2^{2}} - 1}{2} = \frac{m_{1}^{o} - 1 - 2 - 2^{2}}{2^{3}}$\\
+        And so on ... .
+\end{enumerate}
+
+We get in general:
+\begin{equation}
+    \begin{split}
+    m_{i}^{o} &= \frac{m_{1}^{o} - \sum_{k=0}^{i-2}2^{k}}{2^{i-1}}\\
+        &= \frac{m_{1}^{o} - 2^{0} - \sum_{k=1}^{i-2}2^{k}}{2^{i-1}}\\
+        &= \frac{m_{1}^{o} - 1 - 2\frac{2^{i-2} - 1}{2 - 1}}{2^{i-1}}\\
+        &= \frac{m_{1}^{o} - 2^{i-1} + 1}{2^{i-1}}
+    \end{split}
+\label{eq:moddeq}
+\end{equation}
+
+for all $i \geq 2$, $n \in \mathbb{N}$. To determine the final sequence element, we have to do one even step:
+\begin{equation}
+    \begin{split}
+        n_{i+1}^{e} &= \frac{m_{1}^{o} - 2^{i-1} + 1}{2^{i-1}} \cdot \frac{1}{2}\\
+            &= \frac{\left(2n_{1}^{o} + 1\right) - 2^{i-1} + 1}{2^{i}}\\
+            &= \frac{2n_{1}^{o} - 2^{i-1} + 2}{2^{i}}\\
+            &= \frac{n_{1}^{o} - 2^{i-2} + 1}{2^{i-1}}
+    \end{split}
+\label{eq:meveneq}
+\end{equation}
+with $m_{1}^{o} = 2n_{1}^{o} + 1$ and $m_{i}^{e} = 2n_{i+1}^{e}$. We will solve equation (\ref{eq:meveneq}) for $n_{1}^{o}$:
+\begin{equation}
+    \begin{split}
+        2^{i-1}n_{i+1}^{e} &= n_{1}^{o} - 2^{i-2} + 1\\
+        n_{1}^{o} &= 2^{i-1}n_{i+1}^{e} + 2^{i-2} - 1
+    \end{split}
+\label{eq:maineq}
+\end{equation}
+% ================================================================================
+% --------------------------------------------------------------------------------
+\section{Distance examinations}
+\label{s:distanceexamination}
+% --------------------------------------------------------------------------------
+Now, we want to use the result from the section above for some distance examinations.
+% ================================================================================
+% --------------------------------------------------------------------------------
+\subsection{First appearances within Grundy sequence}
+\label{ss:firstappearanceswithingrundysequence}
+% --------------------------------------------------------------------------------
+We want to determine the first appearances of a particular number within the Grundy sequence.\\
+
+At first at all, we have the first appearance of a number simple given by an even step. So, $n_{i+1}^{e}$ appears for $m_{i+1}^{e} = 2n_{i+1}^{e}$, because of $a\left(m_{i+1}^{e}\right) = a\left(2n_{i+1}^{e}\right) = n_{i+1}^{e}$.\\
+
+So, to determine when this number $n_{i+1}^{e}$ appears the next, second time, within the Grundy sequence, we simple have take equation (\ref{eq:maineq}) for $i=2$:
+\begin{equation}
+    \begin{split}
+        n_{1,1}^{o} &= 2^{2-1}n_{i+1}^{e} + 2^{2-2} - 1\\
+            &= 2n_{i+1}^{e}
+    \end{split}
+\label{eq:odd_firstappearance}
+\end{equation}
+% ================================================================================
+% --------------------------------------------------------------------------------
+\subsection{Positions of sequence elements}
+\label{ss:postitionofsequenceelements}
+% --------------------------------------------------------------------------------
+We are interested in the positions of sequence elements.\\
+
+The position $pos$ of a number $n_{i+1}^{e}$ within a simple integer sequence $0,1, \dots, k-2, k-1$ is given by
+\begin{equation}
+    n_{i+1,pos}^{e} = n_{i+1}^{e}
+\label{eq:number_pos}
+\end{equation}
+
+and the position $pos$ of numbers $n_{i}^{u}$ respectively $n_{i}^{e}$ within Grundy sequence are given by
+\begin{equation}
+    n_{i,pos}^{o} = 2n_{i}^{o} + 2 \quad \mathrm{and} \quad n_{i,pos}^{e} = 2n_{i}^{e} + 1.
+\label{eq:gundy_pos}
+\end{equation}
+% ================================================================================
+% --------------------------------------------------------------------------------
+\subsection{Position distance of first appearances}
+\label{ss:positiondistanceoffirstappearances}
+% --------------------------------------------------------------------------------
+Now, we want to calculate the position distance between the first even and the first odd appearance of a certain number.
+
+\begin{equation}
+    \begin{split}
+        |n_{1,1,pos}^{o} - n_{i+1,pos}^{e}| &= 2n_{1,1}^{o} + 2 - n_{i+1,pos}^{e}\\
+            &= 2\left(2n_{i+1}^{e}\right) + 2 - \left(2n_{i+1}^{e} + 1\right)\\
+            &= 4n_{i+1}^{e} + 2 - 2n_{i+1}^{e} - 1\\
+            &= 2n_{i+1}^{e} + 1
+    \end{split}
+\label{eq:postdistfirstapp}
+\end{equation}
+% ================================================================================
+% --------------------------------------------------------------------------------
+\subsection{Position distance of problem statement sequence}
+\label{ss:positiondistanceoffproblemstatementsequence}
+% --------------------------------------------------------------------------------
+Now, we want to calculate the position distance for our given problem statement sequence.
+
+\begin{equation}
+    \begin{split}
+        |n_{1,1,pos}^{o} - n_{i+1,pos}^{e}| &= 2n_{1}^{o} + 2 - n_{i+1}^{e}\\
+            &= 2\left(2n_{i+1}^{e}\right) + 2 - n_{i+1}^{e}\\
+            &= 4n_{i+1}^{e} + 2 - n_{i+1}^{e}\\
+            &= 3n_{i+1}^{e} + 2
+    \end{split}
+\label{eq:posdist}
+\end{equation}
+
+We start counting the sequence by $1$. Since we want to have a look at the original problem statement with a given pre-sequence $\{0,1,\dots, k-2,k-1\}$, we have to resubstitute the solution by $n_{i+1}^{e} - 1$ to
+\begin{equation}
+    \begin{split}
+        |n_{1,1,pos}^{o} - n_{i+1,pos}^{e}| &= 3\left(n_{i+1}^{e} - 1\right) + 2\\
+            &= 3n_{i+1}^{e} - 3 + 2\\
+            &= 3n_{i+1}^{e} - 1
+    \end{split}
+\label{eq:resubsol}
+\end{equation}
+% ================================================================================
+% --------------------------------------------------------------------------------
+\subsection{Distance between same number appearences}
+\label{ss:distancebetweenstamenumberappearences}
+% --------------------------------------------------------------------------------
+Finally, we want to determine the distance between two arbitrary appearances $n_{1,1}^{o}$ and $n_{1,2}^{o}$ of the same number within the Grundy sequence with the help of equation (\ref{eq:maineq}).
+
+\begin{equation}
+    \begin{split}
+        |n_{1,1}^{o} - n_{1,2}^{o}| &= \left(2^{i_{1} - 1}n_{i+1}^{e} + 2^{i_{1}-2} - 1\right) - \left(2^{i_{2} - 1}n_{i+1}^{e} + 2^{i_{2}-2} - 1\right)\\
+            &= n_{i+1}^{e}\left(2^{i_{1} - 1} - 2^{i_{2} - 1}\right) + \left(2^{i_{1} - 2} - 2^{i_{2} - 2}\right)
+    \end{split}
+\label{eq:samenumberapp_p1}
+\end{equation}
+
+With Taylor series we get
+\begin{equation}
+    \begin{split}
+        2^{i_{1} - 1} - 2^{i_{2} - 1} &= \frac{1}{2}\left(1 - 2^{i_{2}}\right) + \sum_{\mu = 1}^{\infty} \frac{i_{1}^{\mu}\log^{\mu}\left(2\right)}{2\mu!}\\
+        2^{i_{1} - 2} - 2^{i_{2} - 2} &= \frac{1}{4}\left(-1 + 2^{i_{2}}\right) + \sum_{\mu = 1}^{\infty} \frac{i_{1}^{\mu}\log^{\mu}\left(2\right)}{4\mu!}
+    \end{split}
+\label{eq:taylor}
+\end{equation}
+
+so we get our searched distance by
+\begin{equation}
+    \begin{split}
+        |n_{1,1}^{o} - n_{1,2}^{o}| &\approx n_{i+1}^{e}\left(\frac{1}{2}\left(1 - 2^{i_{2}}\right) + \sum_{\mu = 1}^{\infty} \frac{i_{1}^{\mu}\log^{\mu}\left(2\right)}{2\mu!}\right) + \left(\frac{1}{4}\left(-1 + 2^{i_{2}}\right) + \sum_{\mu = 1}^{\infty} \frac{i_{1}^{\mu}\log^{\mu}\left(2\right)}{4\mu!}\right)\\
+            &\approx \left(1-2^{i_{2}}\right)\left(\frac{1}{2}n_{i+1}^{e} - \frac{1}{4}\right) + \left(\sum_{\mu = 1}^{\infty}\frac{\left(i_{1}\log\left(2\right)\right)^{\mu}}{\mu!}\right)\left(\frac{1}{2}n_{i+1}^{e} + \frac{1}{4}\right)\\
+            &= \left(1 - 2^{i_{2}}\right)\left(\frac{1}{2}n_{i+1}^{e} - \frac{1}{4}\right) + \left(\exp\left(i_{1}\log\left(2\right)\right) - 1\right)\left(\frac{1}{2}n_{i+1}^{e} + \frac{1}{4}\right)
+    \end{split}
+\label{eq:samenumberapp_p2}
+\end{equation}
+% ================================================================================
+% --------------------------------------------------------------------------------
+\section{Conclusion}
+\label{s:conclusion}
+% --------------------------------------------------------------------------------
+ TODO % TODO
+% ================================================================================
+\section*{Acknowledgement} 
+Special thanks to the individual donators and research buddies for supporting this work.
+% ================================================================================
+%\section*{References}
+% --------------------------------------------------------------------------------
+%\newpage
+%\clearpage
+%\markboth{Bibliography}{Bibliography}
+%\section*{Bibliography}
+%\label{s:bibliography}
+% --------------------------------------------------------------------------------
+%\bibliographystyle{amsplain}
+%\bibliographystyle{unsrtdin}
+%\bibliographystyle{plain}
+
+\nocite{*}
+\bibliographystyle{unsrtdin}
+\bibliography{notes-grundyvaluesanddistinctdistances}
+% ================================================================================
+\section*{License}
+\label{s:license}
+% --------------------------------------------------------------------------------
+\begin{center}
+	\includegraphics{by-nc-nd.png} \\
+	\url{https://creativecommons.org/licenses/by-nc-nd/4.0/}
+\end{center}
+% ================================================================================
+\end{document}
+% ================================================================================

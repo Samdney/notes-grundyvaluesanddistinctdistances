@@ -8,7 +8,7 @@ https://github.com/Samdney/notes-grundyvaluesanddistinctdistances
 id: notes_0007
 
 ## Abstract
-*In this work we examine some basic properties of Grundy values and it’s distances between themselves as well as between the sequence {0, . . . , k − 1}, k ∈ N.*
+*In this work we examine some basic properties of Grundy values for heaps of n beans and it’s distances between themselves as well as between the sequence {0, . . . , k − 1}, k ∈ N.*
 
 ## Content
 * Preamble
@@ -22,4 +22,6 @@ id: notes_0007
 * 3.3 Position distance of first appearances
 * 3.4 Position distance of problem statement sequence
 * 3.5 Distance between same number appearences
-* 4. Conclusion
+* 4 Conclusion
+* Acknowledgement
+* License
